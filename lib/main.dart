@@ -36,24 +36,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Color? currentColor;
+  Color? _currentColor;
+  static const double _borderRadius = 18.0;
+  static const double _fontSize = 24.0;
 
   @override
   void initState() {
     super.initState();
-    currentColor = ColorGenerator.generateColor();
+    _currentColor = ColorGenerator.generateColor();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: currentColor,
+      backgroundColor: _currentColor,
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: TextButton(
+        child: ElevatedButton(
           onPressed: helloThereButton,
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(_borderRadius),
+                side: const BorderSide(color: Colors.red),
+              ),
+            ),
+            textStyle: MaterialStateTextStyle.resolveWith(
+              (states) => const TextStyle(
+                fontSize: _fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           child: const Text('Hello there'),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -62,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void helloThereButton() {
     setState(() {
-      currentColor = ColorGenerator.generateColor();
+      _currentColor = ColorGenerator.generateColor();
     });
   }
 }
